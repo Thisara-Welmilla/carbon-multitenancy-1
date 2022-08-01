@@ -41,15 +41,16 @@
 <%
     UserStoreInfo userStoreInfo = null;
     UserRealmInfo userRealmInfo = null;
-
-    String BUNDLE = "org.wso2.carbon.userstore.ui.i18n.Resources";
+    String backendServerURL = "";
+            
+            String BUNDLE = "org.wso2.carbon.userstore.ui.i18n.Resources";
     ResourceBundle resourceBundle = ResourceBundle.getBundle(BUNDLE, request.getLocale());
 
     try {
         userRealmInfo = (UserRealmInfo) session.getAttribute(UserAdminUIConstants.USER_STORE_INFO);
         if (userRealmInfo == null) {
             String cookie = (String) session.getAttribute(ServerConstants.ADMIN_SERVICE_COOKIE);
-            String backendServerURL = CarbonUIUtil.getServerURL(config.getServletContext(), session);
+            backendServerURL = CarbonUIUtil.getServerURL(config.getServletContext(), session);
             ConfigurationContext configContext =
                     (ConfigurationContext) config.getServletContext().getAttribute(CarbonConstants.CONFIGURATION_CONTEXT);
             UserAdminClient client = new UserAdminClient(cookie, backendServerURL, configContext);
@@ -72,6 +73,7 @@
 </script>
 <%
     }
+    String mgtConsoleURL = backendServerURL.split("carbon")[0] + "carbon/admin/login.jsp";
 %>
 <%
 
@@ -178,6 +180,8 @@ String domainName = request.getParameter("domain");
                                 value="<%=Encode.forHtml(domainName)%>"/>
                         </td>
                     </tr>
+                    
+                    
                     <%if (!isUpdating) { %>
                     <tr>
                         <td></td>
@@ -187,11 +191,19 @@ String domainName = request.getParameter("domain");
                     </tr>
                     <% }%>
 
+                    <tr>
+                        <td><fmt:message key="mgt.console.access.url"/>
+                        </td>
+                        <td colspan="2">
+                            <span id="adminValue"></span>
+                        </td>
+                    </tr>
+
                     <%if (isUpdating) { %>
                     <tr>
                         <td><fmt:message key="tenant.id"/>
                         </td>
-                        <td colspan="2"><input
+                        <td colspan="2"><label for="tenantId"></label><input
                                 onchange="fillAdminValue();"
                                 readonly="true" type="text" name="tenantId"
                                 id="tenantId" style="width:400px"
@@ -201,41 +213,7 @@ String domainName = request.getParameter("domain");
                     <% }
 
                     %>
-
-                    <tr>
-                        <td colspan="3" class="middle-header"><fmt:message
-                                key="usage.plan.information"/></td>
-
-                    </tr>
-                    <tr>
-                        <td>
-                            <fmt:message key="select.usage.plan.for.tenant"/><span
-                                class="required">*</span>
-                        </td>
-                        <td>
-                            <select name="usage-plan-name" id="usage-plan-name">
-                            </select>
-                            <%
-                                if (!CommonUtil.getStratosConfig().getUsagePlanURL().equals("")) {
-                            %>
-                            <a href=<%=CommonUtil.getStratosConfig().getUsagePlanURL()%>
-                                       target=<%=CommonUtil.getStratosConfig().getUsagePlanURL()%>>
-                                <b>More info</b></a>
-                            <% } %>
-                        </td>
-                        <td>
-                            <% if (usagePlan.length() > 2) {
-                            %>
-                            Your Current Usage Plan is : <%=usagePlan%>
-                            <%}%>
-                        </td>
-                    <tr>
-                        <td></td>
-                        <td colspan="2"><fmt:message key="select.package.message"/>
-                        </td>
-                    </tr>
-
-
+                    
                     <tr>
                         <td colspan="3" class="middle-header"><fmt:message
                                 key="tenant.admin"/></td>
@@ -261,11 +239,14 @@ String domainName = request.getParameter("domain");
                             <%if (!isUpdating) { %>
                             <span class="required">*</span></td>
                         <%}%>
-                        <td colspan="2"><input <%if (isUpdating) {%>
-                                readonly="true" <%}%> type="text" name="admin"
+                        <td colspan="2">
+                            <input <%if (isUpdating) {%> readonly="true" <%}%>
+                                type="text" name="admin"
                                 id="admin" style="width:400px" value="<%=admin%>"
-                                onchange="isDomainNameAvailable();"/><span
-                                id="adminValue"></span></td>
+                                onchange="isDomainNameAvailable();"
+                            />
+<%--                            <span id="adminValue"></span>--%>
+                        </td>
                     </tr>
 
                     <tr>
@@ -302,6 +283,18 @@ String domainName = request.getParameter("domain");
                                                value="<%=email%>"/></td>
                     </tr>
                     <% } %>
+<%--                    <tr>--%>
+<%--                        <td colspan="3" class="middle-header"><fmt:message--%>
+<%--                                key="mgt.console.access.url"/></td>--%>
+<%--                    </tr>--%>
+<%--                    <tr>--%>
+<%--                        <td>--%>
+<%--                            <fmt:message key="mgt.console.url"/>--%>
+<%--                        </td>--%>
+<%--                        <td colspan="2">--%>
+<%--                            <a href="https://is.wso2isdemo.com/carbon/admin/login.jsp">https://is.wso2isdemo.com/carbon/admin/login.jsp</a>--%>
+<%--                        </td>--%>
+<%--                    </tr>--%>
                     </tbody>
                 </table>
             </td>

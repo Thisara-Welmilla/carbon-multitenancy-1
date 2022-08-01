@@ -123,6 +123,7 @@ function activationChanged(btn, domain) {
 function fillAdminValue() {
     var adminValue = $('adminValue');
     var domain = $('domain');
+    // var consoleUrl = $('mgt-console-url');
 
     var reason = validateIllegal(domain, "Domain");
     if (reason != "") {
@@ -133,10 +134,13 @@ function fillAdminValue() {
 
 
     if (domain.value == "") {
-        adminValue.innerHTML = '' + domain.value;
+        // adminValue.innerHTML = '' + domain.value;
+        adminValue.innerHTML = '-';
     }
     else {
-        adminValue.innerHTML = '@' + domain.value;
+        // adminValue.innerHTML = '@' + domain.value;
+        adminValue.innerHTML = "https://is.wso2isdemo.com/carbon/admin/login.jsp" + '?tenant=' + domain.value;
+        // consoleUrl.innerHTML = "https://is.wso2isdemo.com/carbon/admin/login.jsp" + '?tenant=' + domain.value;
     }
 }
 function refreshFillAdminValue() {

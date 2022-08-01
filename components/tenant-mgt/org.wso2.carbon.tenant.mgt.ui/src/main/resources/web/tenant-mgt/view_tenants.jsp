@@ -162,6 +162,8 @@
                         <th style="padding-left:5px;text-align:left;"><fmt:message
                                 key="admin.email"/></th>
                         <th style="padding-left:5px;text-align:left;"><fmt:message
+                                key="admin.mgt.console.url"/></th>
+                        <th style="padding-left:5px;text-align:left;"><fmt:message
                                 key="created.date"/></th>
                         <th style="padding-left:5px;text-align:left;"><fmt:message key="actions"/></th>
                         <th style="padding-left:5px;text-align:left;"><fmt:message key="edit"/></th>
@@ -187,6 +189,9 @@
                     <td style="padding-left:5px;padding-top:3px;text-align:left;"><%=tenantDomain%>
                     </td>
                     <td style="padding-left:5px;padding-top:3px;text-align:left;"><%=email%>
+                    </td>
+                    <td style="padding-left:5px;padding-top:3px;text-align:left;">
+                        <%="https://is.wso2isdemo.com/carbon/admin/login.jsp?tenant=" + tenantDomain%>
                     </td>
                     <td style="padding-left:5px;padding-top:3px;text-align:left;"><%=createdDateStr%>
                     </td>
